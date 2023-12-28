@@ -1,4 +1,4 @@
-# Clean My Roster!!!
+# Clean My Roster!
 This script can be utilized to reformat standard BattleScribe roster .html files to add a few convenience features and reduce scrolling
 
 ## Dependencies
