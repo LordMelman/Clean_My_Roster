@@ -1,5 +1,5 @@
 # Clean My Roster!
-This script can be utilized to reformat standard BattleScribe roster .html files to add a few convenience features and reduce scrolling
+Roster Rework can be utilized to re-format standard BattleScribe roster .html files, adding a few convenience features and reducing scrolling
 
 ## Dependencies
 
