@@ -1,6 +1,34 @@
 from bs4 import BeautifulSoup
 import re
 
+def append_remove_button(soup):
+    for root_selection in soup.find_all(class_='rootselection'):
+        # Create a newline tag
+        newline = soup.new_tag("br")
+
+        # Create a remove button
+        remove_btn = soup.new_tag("button", attrs={'class': 'remove-unit'})
+        remove_btn.string = "Remove"
+
+        # Insert the newline and the button at the end of root_selection
+        root_selection.append(newline)
+        root_selection.append(remove_btn)
+
+
+def append_script_for_removal(soup):
+    # Add JavaScript to handle the removal functionality
+    script_tag = soup.new_tag("script")
+    script_tag.string = """
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.remove-unit').forEach(function(button) {
+            button.addEventListener('click', function() {
+                this.parentElement.remove();
+            });
+        });
+    });
+    """
+    soup.body.append(script_tag)
+
 def append_values_to_heading(soup):
     for root_selection in soup.find_all(class_='rootselection'):
         heading = root_selection.find('h4')
@@ -74,8 +102,11 @@ def reformat_html(file_path):
         content = file.read()
 
     soup = BeautifulSoup(content, 'html.parser')
-    append_values_to_heading(soup)
-    add_minimize_functionality(soup)
+    append_values_to_heading(soup)  # Function from previous implementation
+    add_minimize_functionality(soup)  # Function from previous implementation
+    append_remove_button(soup)
+    append_script_for_removal(soup)
+
     formatted_content = soup.prettify()
 
     new_file_name = file_path.rsplit('.', 1)[0] + '_reformatted.html'

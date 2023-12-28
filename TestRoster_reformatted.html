@@ -240,6 +240,10 @@
            </span>
           </p>
          </div>
+         <br/>
+         <button class="remove-unit">
+          Remove
+         </button>
         </li>
         <li class="rootselection">
          <h4>
@@ -255,6 +259,10 @@
            </span>
           </p>
          </div>
+         <br/>
+         <button class="remove-unit">
+          Remove
+         </button>
         </li>
         <li class="rootselection">
          <h4>
@@ -276,6 +284,10 @@
            </span>
           </p>
          </div>
+         <br/>
+         <button class="remove-unit">
+          Remove
+         </button>
         </li>
        </ul>
       </li>
@@ -598,6 +610,10 @@
            </tr>
           </table>
          </div>
+         <br/>
+         <button class="remove-unit">
+          Remove
+         </button>
         </li>
         <li class="rootselection">
          <h4>
@@ -913,6 +929,10 @@
            </tr>
           </table>
          </div>
+         <br/>
+         <button class="remove-unit">
+          Remove
+         </button>
         </li>
        </ul>
       </li>
@@ -1299,6 +1319,10 @@
            </tr>
           </table>
          </div>
+         <br/>
+         <button class="remove-unit">
+          Remove
+         </button>
         </li>
        </ul>
       </li>
@@ -1615,6 +1639,10 @@
            </tr>
           </table>
          </div>
+         <br/>
+         <button class="remove-unit">
+          Remove
+         </button>
         </li>
        </ul>
       </li>
@@ -1966,6 +1994,10 @@
            </tr>
           </table>
          </div>
+         <br/>
+         <button class="remove-unit">
+          Remove
+         </button>
         </li>
        </ul>
       </li>
@@ -2077,6 +2109,15 @@
             heading.addEventListener('click', function() {
                 var contentDiv = this.nextElementSibling;
                 contentDiv.style.display = contentDiv.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    });
+  </script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.remove-unit').forEach(function(button) {
+            button.addEventListener('click', function() {
+                this.parentElement.remove();
             });
         });
     });
