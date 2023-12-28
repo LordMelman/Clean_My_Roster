@@ -3,27 +3,34 @@ import re
 
 def append_values_to_heading(soup):
     for root_selection in soup.find_all(class_='rootselection'):
-        # Find the h4 tag
         heading = root_selection.find('h4')
         if heading:
             print(f"Processing: {heading.text}")
 
-            # Extract the relevant part from the h4 text
+            # Extract the relevant part from the h4 text and prepare for singular/plural matching
             h4_text_part = re.split(r" \[", heading.text)[0]
 
-            # Search for the corresponding table row
-            for table in root_selection.find_all('table'):
-                trs = table.find_all('tr')
-                for tr in trs:
-                    tds = tr.find_all('td')
-                    if len(tds) > 1 and h4_text_part in tds[0].text:
-                        # Extract relevant values from tds
-                        values = [td.text.strip() for td in tds[1:7]]
-                        if len(values) >= 6:
-                            values_text = ' - M {} T {} SV {} W {} LD {} OC {}'.format(*values)
-                            heading.string = f"{heading.text} {values_text}"
-                            print(f"Updated: {heading}")
-                            break
+            # Initialize variable to store the last matching tr for statistics
+            stats_tr = None
+
+            # Search for the corresponding table rows
+            for tr in root_selection.find_all('tr'):
+                tds = tr.find_all('td')
+                if len(tds) > 1 and "profile-name" in tds[0].get('class', []):
+                    # Check for containment rather than exact match to handle plural cases
+                    if h4_text_part in tds[0].text or tds[0].text in h4_text_part:
+                        stats_tr = tr
+
+            # Process the last matching tr found
+            if stats_tr:
+                next_tds = stats_tr.find_all('td')[1:]
+                if len(next_tds) >= 6:
+                    values = [td.text.strip() for td in next_tds[:6]]
+                    values_text = ' - M {} T {} SV {} W {} LD {} OC {}'.format(*values)
+                    heading.string = f"{heading.text} {values_text}"
+                    print(f"Updated: {heading}")
+            else:
+                print(f"No matching data found for: {heading.text}")
 
 
 def add_minimize_functionality(soup):
